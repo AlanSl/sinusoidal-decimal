@@ -1,6 +1,6 @@
 'use strict'
 
-function sinusoidalDecimal (initial, min, max) {
+function sinusoidal (initial, min, max, returnDecimal = false) {
   validate([initial, min, max])
   if (min > max) {
     const switchInput = { min, max }
@@ -8,9 +8,9 @@ function sinusoidalDecimal (initial, min, max) {
     max = switchInput.min
   }
 
-  if (initial > max) return 1
-  if (initial < min) return 0
-  if (min === max) return 1
+  if (initial > max) return returnDecimal ? 1 : max
+  if (initial < min) return returnDecimal ? 0 : min
+  if (min === max) return returnDecimal ? 1 : max
 
   const pi = Math.PI
   const range = max - min
@@ -22,7 +22,9 @@ function sinusoidalDecimal (initial, min, max) {
   const sinusoidalPosition = Math.sin((decimalPosition - 0.5) * pi)
 
   // Returns position on sine curve between 0 and 1
-  return ((sinusoidalPosition + 1) / 2)
+  const sinusoidalDecimal = ((sinusoidalPosition + 1) / 2)
+
+  return returnDecimal ? sinusoidalDecimal : min + range * sinusoidalDecimal
 }
 
 function validate (numbers) {
@@ -33,4 +35,4 @@ function validate (numbers) {
   }
 }
 
-module.exports = sinusoidalDecimal
+module.exports = sinusoidal

@@ -1,48 +1,64 @@
 'use strict'
 
 const { test } = require('tap')
-const sinusoidalDecimal = require('./index.js')
+const sinusoidal = require('./index.js')
 
 const expected = [
-  '0.1464',
-  '0.5000',
-  '0.8536'
+  0.14644660940672627,
+  0.5,
+  0.8535533905932737
 ]
 
 test('Typical inputs', (t) => {
-  t.equals(sinusoidalDecimal(10, 10, 50), 0)
-  t.equals(sinusoidalDecimal(20, 10, 50).toFixed(4), expected[0])
-  t.equals(sinusoidalDecimal(30, 10, 50).toFixed(4), expected[1])
-  t.equals(sinusoidalDecimal(40, 10, 50).toFixed(4), expected[2])
-  t.equals(sinusoidalDecimal(50, 10, 50), 1)
+  t.equals(sinusoidal(10, 10, 50, true), 0)
+  t.equals(sinusoidal(20, 10, 50, true).toFixed(4), expected[0].toFixed(4))
+  t.equals(sinusoidal(30, 10, 50, true), expected[1])
+  t.equals(sinusoidal(40, 10, 50, true).toFixed(4), expected[2].toFixed(4))
+  t.equals(sinusoidal(50, 10, 50, true), 1)
+
+  t.equals(sinusoidal(10, 10, 50, false), 10)
+  t.equals(sinusoidal(20, 10, 50, false).toFixed(4), (10 + expected[0] * 40).toFixed(4))
+  t.equals(sinusoidal(30, 10, 50, false), (10 + expected[1] * 40))
+  t.equals(sinusoidal(40, 10, 50, false).toFixed(4), (10 + expected[2] * 40).toFixed(4))
+  t.equals(sinusoidal(50, 10, 50, false), 50)
+
   t.end()
 })
 
 test('Out of bounds', (t) => {
-  t.equals(sinusoidalDecimal(1, 10, 100), 0)
-  t.equals(sinusoidalDecimal(-1, 1, 2), 0)
+  t.equals(sinusoidal(1, 10, 100, true), 0)
+  t.equals(sinusoidal(-1, 1, 2, true), 0)
 
-  t.equals(sinusoidalDecimal(100, 1, 10), 1)
-  t.equals(sinusoidalDecimal(1, -10, -1), 1)
+  t.equals(sinusoidal(100, 1, 10, true), 1)
+  t.equals(sinusoidal(1, -10, -1, true), 1)
+
+  t.equals(sinusoidal(1, 10, 100, false), 10)
+  t.equals(sinusoidal(-1, 1, 2, false), 1)
+
+  t.equals(sinusoidal(100, 1, 10, false), 10)
+  t.equals(sinusoidal(1, -10, -1, false), -1)
+
   t.end()
 })
 
 test('Edge cases', (t) => {
-  t.equals(sinusoidalDecimal(20, 50, 10).toFixed(4), expected[0])
-  t.equals(sinusoidalDecimal(1, 100, 10), 0)
-  t.equals(sinusoidalDecimal(20, 50, 50), 0)
-  t.equals(sinusoidalDecimal(50, 50, 50), 1)
-  t.equals(sinusoidalDecimal(90, 50, 50), 1)
+  t.equals(sinusoidal(20, 50, 10, true).toFixed(4), expected[0].toFixed(4))
+  t.equals(sinusoidal(1, 100, 10, true), 0)
+  t.equals(sinusoidal(20, 50, 50, true), 0)
+  t.equals(sinusoidal(50, 50, 50, true), 1)
+  t.equals(sinusoidal(90, 50, 50, true), 1)
+
+  t.equals(sinusoidal(50, 50, 50, false), 50)
   t.end()
 })
 
 test('Validation', (t) => {
   t.throws(() => {
-    sinusoidalDecimal(NaN, 10, 10)
+    sinusoidal(NaN, 10, 10)
   }, new Error('NaN passed as sinusoidalDecimal argument [0]'))
 
   t.throws(() => {
-    sinusoidalDecimal(10, 10)
+    sinusoidal(10, 10)
   }, new Error('Invalid type undefined passed as sinusoidalDecimal argument [2]'))
   t.end()
 })
