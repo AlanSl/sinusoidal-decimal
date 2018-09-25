@@ -1,0 +1,25 @@
+{
+  "name": "sinusoidal-decimal",
+  "version": "0.0.1",
+  "description": "Input a number and a range (min-max), get the number's position along the range eased by a sine curve",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AlanSl/sinusoidal-decimal.git"
+  },
+  "keywords": [
+    "easing",
+    "sine",
+    "sin",
+    "ease"
+  ],
+  "author": "Alan Slater",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/AlanSl/sinusoidal-decimal/issues"
+  },
+  "homepage": "https://github.com/AlanSl/sinusoidal-decimal#readme"
+}
