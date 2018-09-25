@@ -1,6 +1,6 @@
 {
   "name": "sinusoidal-decimal",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Input a number and a range (min-max), get the number's position along the range eased by a sine curve",
   "main": "index.js",
   "scripts": {
